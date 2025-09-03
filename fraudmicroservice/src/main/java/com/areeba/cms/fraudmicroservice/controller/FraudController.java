@@ -1,23 +1,22 @@
-package com.areeba.cms.cmsmircoservice.transactions.controller;
+package com.areeba.cms.fraudmicroservice.controller;
 
-import com.areeba.cms.cmsmicroservice.controller.TransactionsApi;
-import com.areeba.cms.cmsmicroservice.type.TransactionCreateRequest;
-import com.areeba.cms.cmsmicroservice.type.TransactionResponse;
-import com.areeba.cms.cmsmircoservice.transactions.service.TransactionService;
+import com.areeba.cms.fraudmicroservice.service.FraudService;
+import com.areeba.cms.fraudmicroservice.type.FraudCheckRequest;
+import com.areeba.cms.fraudmicroservice.type.FraudCheckResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TransactionsController implements TransactionsApi {
+public class FraudController implements EvaluateApi {
 
-    private final TransactionService transactionService;
+    private final FraudService fraudService;
 
-    public TransactionsController(TransactionService transactionService) {
-        this.transactionService = transactionService;
+    public FraudController(FraudService fraudService) {
+        this.fraudService = fraudService;
     }
 
     @Override
-    public ResponseEntity<TransactionResponse> createTransaction(TransactionCreateRequest transaction) {
-        return ResponseEntity.ok(transactionService.createTransactionService(transaction));
+    public ResponseEntity<FraudCheckResponse> evaluateTransaction(FraudCheckRequest fraudCheckRequest) {
+        return ResponseEntity.ok(fraudService.evaluateTransactionService(fraudCheckRequest));
     }
 }

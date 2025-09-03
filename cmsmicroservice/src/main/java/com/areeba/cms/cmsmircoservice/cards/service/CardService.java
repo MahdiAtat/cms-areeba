@@ -1,18 +1,24 @@
-package com.areeba.cms.cmsmircoservice.accounts.service;
+package com.areeba.cms.cmsmircoservice.cards.service;
 
-import com.areeba.cms.cmsmicroservice.type.AccountCreateRequest;
-import com.areeba.cms.cmsmicroservice.type.AccountResponse;
+import com.areeba.cms.cmsmicroservice.type.AccountCardIdsResponse;
+import com.areeba.cms.cmsmicroservice.type.CardCreateRequest;
+import com.areeba.cms.cmsmicroservice.type.CardIdPage;
+import com.areeba.cms.cmsmicroservice.type.CardResponse;
 
 import java.util.UUID;
 
-public interface AccountService {
+public interface CardService {
 
-    AccountResponse createAccountService(AccountCreateRequest req);
+    CardResponse createCardService(CardCreateRequest req);
 
-    AccountResponse getAccountService(UUID id);
+    void activateCardService(UUID id);
 
-    AccountResponse updateAccountService(UUID id, AccountCreateRequest req);
+    void deactivateCardService(UUID id);
 
-    void deleteAccountService(UUID id);
+    CardResponse getCardService(UUID id);
+
+    CardIdPage listCardIds(int page, int size);
+
+    AccountCardIdsResponse listCardIdsByAccount(UUID accountId, int page, int size);
 
 }

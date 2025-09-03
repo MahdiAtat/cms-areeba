@@ -1,108 +1,113 @@
 package com.areeba.cms.cmsmircoservice.transactions.service.impl;
 
 import com.areeba.cms.cmsmicroservice.type.*;
-import com.areeba.cms.cmsmircoservice.accounts.service.AccountService;
+import com.areeba.cms.cmsmircoservice.accounts.repo.AccountRepository;
+import com.areeba.cms.cmsmircoservice.cards.repo.CardRepository;
 import com.areeba.cms.cmsmircoservice.exception.ResourceNotFoundException;
-import com.areeba.cms.cmsmircoservice.transactions.repo.CardRepository;
-import com.areeba.cms.cmsmircoservice.transactions.service.CardService;
+import com.areeba.cms.cmsmircoservice.exception.TransactionRejectedException;
+import com.areeba.cms.cmsmircoservice.rest.FraudClient;
+import com.areeba.cms.cmsmircoservice.transactions.repo.TransactionRepository;
+import com.areeba.cms.cmsmircoservice.transactions.service.TransactionService;
 import com.areeba.cms.cmsmircoservice.type.Account;
 import com.areeba.cms.cmsmircoservice.type.Card;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import com.areeba.cms.cmsmircoservice.type.Transaction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @Service
-public class CardServiceImpl implements CardService {
+public class TransactionServiceImpl implements TransactionService {
 
+    private final TransactionRepository transactionRepository;
+    private final AccountRepository accountRepository;
     private final CardRepository cardRepository;
-    private final AccountService accountService;
+    private final FraudClient fraudClient;
 
-    public CardServiceImpl(CardRepository cardRepository, AccountService accountService) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository, AccountRepository accountRepository, CardRepository cardRepository, FraudClient fraudClient) {
+        this.transactionRepository = transactionRepository;
+        this.accountRepository = accountRepository;
         this.cardRepository = cardRepository;
-        this.accountService = accountService;
+        this.fraudClient = fraudClient;
     }
+
 
     @Transactional
     @Override
-    public CardResponse createCardService(CardCreateRequest cardCreateRequest) {
-        Account account = accountService.requireAccount(cardCreateRequest.getAccountId());
-        Card card = new Card();
-        card.setAccount(account);
-        card.setCardNumber(cardCreateRequest.getCardNumber());
-        card.setExpiry(cardCreateRequest.getExpiry());
-        card.setStatus(CardStatus.INACTIVE);
-        card = cardRepository.save(card);
-        return toResponse(card);
+    public TransactionResponse createTransactionService(TransactionCreateRequest request) {
+        // Load and lock account for update
+        Account account = accountRepository.findByIdForUpdate(request.getAccountId())
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+        Card card = cardRepository.findById(request.getCardId())
+                .orElseThrow(() -> new ResourceNotFoundException("Card not found"));
+
+        // Card eligibility
+        if (card.getStatus() != CardStatus.ACTIVE)
+            throw new TransactionRejectedException("Card not active");
+        if (card.getExpiry().isBefore(LocalDate.now()))
+            throw new TransactionRejectedException("Card expired");
+        if (!card.getAccount().getId().equals(account.getId()))
+            throw new TransactionRejectedException("Card does not belong to account");
+
+        // Account eligibility
+        if (account.getStatus() != AccountStatus.ACTIVE)
+            throw new TransactionRejectedException("Account not active");
+        BigDecimal amount = request.getTransactionAmount();
+        if (request.getTransactionType() == TransactionType.D && account.getBalance().compareTo(amount) < 0)
+            throw new TransactionRejectedException("Insufficient balance");
+
+        // Fraud check
+        FraudCheckRequest fraudCheckRequest = new FraudCheckRequest();
+        fraudCheckRequest.setAmount(amount);
+        fraudCheckRequest.setCardId(card.getId());
+        fraudCheckRequest.setTimestamp(OffsetDateTime.now(ZoneOffset.UTC));
+        FraudCheckResponse fraud = fraudClient.evaluate(fraudCheckRequest);
+        if (!fraud.getApproved()) {
+            // Save rejected transaction record
+            Transaction rejected = new Transaction();
+            rejected.setAccount(account);
+            rejected.setCard(card);
+            rejected.setTransactionAmount(amount);
+            rejected.setTransactionType(request.getTransactionType());
+            rejected.setTransactionDate(Instant.now());
+            rejected.setResponse("REJECTED");
+            rejected = transactionRepository.save(rejected);
+            return toResponse(rejected);
+        }
+
+        // Apply balance
+        if (request.getTransactionType() == TransactionType.D) {
+            account.setBalance(account.getBalance().subtract(amount));
+        } else {
+            account.setBalance(account.getBalance().add(amount));
+        }
+
+        // Save transaction
+        Transaction transaction = new Transaction();
+        transaction.setAccount(account);
+        transaction.setCard(card);
+        transaction.setTransactionAmount(amount);
+        transaction.setTransactionType(request.getTransactionType());
+        transaction.setTransactionDate(Instant.now());
+        transaction.setResponse(String.valueOf(TransactionResponse.ResponseEnum.APPROVED));
+        transaction = transactionRepository.save(transaction);
+
+        return toResponse(transaction);
     }
 
-    @Transactional
-    @Override
-    public void activateCardService(UUID id) {
-        Card card = cardRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Card not found"));
-        card.setStatus(CardStatus.ACTIVE);
-    }
-
-    @Transactional
-    @Override
-    public void deactivateCardService(UUID id) {
-        Card card = cardRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Card not found"));
-        card.setStatus(CardStatus.INACTIVE);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public CardResponse getCardService(UUID id) {
-        Card card = cardRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Card not found"));
-        return toResponse(card);
-    }
-
-    private CardResponse toResponse(Card card) {
-        String plain = card.getCardNumber();
-        String masked = (plain == null || plain.length() < 4) ? "****" : "**** **** **** " + plain.substring(plain.length() - 4);
-        CardResponse cardResponse = new CardResponse();
-        cardResponse.setId(card.getId());
-        cardResponse.setAccountId(card.getAccount().getId());
-        cardResponse.setStatus(card.getStatus());
-        cardResponse.setExpiry(card.getExpiry());
-        cardResponse.setMaskedCard(masked);
-        return cardResponse;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public AccountCardIdsResponse listCardIdsByAccount(UUID accountId, int page, int size) {
-        accountService.requireAccount(accountId);
-        int p = Math.max(0, page);
-        int s = Math.min(Math.max(size, 1), 50);
-        Page<UUID> result = cardRepository.findCardIdsByAccountId(accountId, PageRequest.of(p, s, Sort.by("id").ascending()));
-        AccountCardIdsResponse accountCardIdsResponse = new AccountCardIdsResponse();
-        accountCardIdsResponse.setCardIds(result.getContent());
-        accountCardIdsResponse.setAccountId(accountId);
-        accountCardIdsResponse.setPage(result.getNumber());
-        accountCardIdsResponse.setSize(result.getSize());
-        accountCardIdsResponse.setTotalElements(result.getTotalElements());
-        accountCardIdsResponse.setTotalPages(result.getTotalPages());
-        accountCardIdsResponse.setHasNext(result.hasNext());
-        return accountCardIdsResponse;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public CardIdPage listCardIds(int page, int size) {
-        int p = Math.max(0, page);
-        int s = Math.min(Math.max(size, 1), 50);
-        Page<UUID> result = cardRepository.findAllIds(PageRequest.of(p, s, Sort.by("id").ascending()));
-        CardIdPage cardIdPage = new CardIdPage();
-        cardIdPage.setCardIds(result.getContent());
-        cardIdPage.setPage(result.getNumber());
-        cardIdPage.setSize(result.getSize());
-        cardIdPage.setTotalPages(result.getTotalPages());
-        cardIdPage.setTotalElements(result.getTotalElements());
-        cardIdPage.setHasNext(result.hasNext());
-        return cardIdPage;
+    private TransactionResponse toResponse(Transaction transaction) {
+        TransactionResponse response = new TransactionResponse();
+        response.setId(transaction.getId());
+        response.setAccountId(transaction.getAccount().getId());
+        response.setCardId(transaction.getCard().getId());
+        response.setTransactionAmount(transaction.getTransactionAmount());
+        response.setTransactionType(transaction.getTransactionType());
+        response.setTransactionDate(OffsetDateTime.ofInstant(transaction.getTransactionDate(), ZoneOffset.UTC));
+        response.setResponse(TransactionResponse.ResponseEnum.valueOf(transaction.getResponse()));
+        return response;
     }
 }

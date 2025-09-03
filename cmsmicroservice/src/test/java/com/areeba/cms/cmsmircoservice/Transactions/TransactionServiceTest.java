@@ -1,4 +1,4 @@
-package com.areeba.cms.cmsmircoservice.Cards.Transactions;
+package com.areeba.cms.cmsmircoservice.Transactions;
 
 import com.areeba.cms.cmsmicroservice.type.*;
 import com.areeba.cms.cmsmircoservice.accounts.repo.AccountRepository;

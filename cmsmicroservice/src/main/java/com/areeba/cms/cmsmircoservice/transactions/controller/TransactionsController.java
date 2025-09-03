@@ -1,49 +1,23 @@
 package com.areeba.cms.cmsmircoservice.transactions.controller;
 
-import com.areeba.cms.cmsmicroservice.controller.CardsApi;
-import com.areeba.cms.cmsmicroservice.type.CardCreateRequest;
-import com.areeba.cms.cmsmicroservice.type.CardIdPage;
-import com.areeba.cms.cmsmicroservice.type.CardResponse;
-import com.areeba.cms.cmsmircoservice.transactions.service.CardService;
+import com.areeba.cms.cmsmicroservice.controller.TransactionsApi;
+import com.areeba.cms.cmsmicroservice.type.TransactionCreateRequest;
+import com.areeba.cms.cmsmicroservice.type.TransactionResponse;
+import com.areeba.cms.cmsmircoservice.transactions.service.TransactionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 @RestController
-public class CardsController implements CardsApi {
+public class TransactionsController implements TransactionsApi {
 
-    private final CardService cardService;
+    private final TransactionService transactionService;
 
-    public CardsController(CardService cardService) {
-        this.cardService = cardService;
+    public TransactionsController(TransactionService transactionService) {
+        this.transactionService = transactionService;
     }
 
     @Override
-    public ResponseEntity<Void> activateCardById(UUID id) {
-        cardService.activateCardService(id);
-        return ResponseEntity.noContent().build();
-
-    }
-
-    @Override
-    public ResponseEntity<CardResponse> createCard(CardCreateRequest card) {
-        return ResponseEntity.ok(cardService.createCardService(card));
-    }
-
-    @Override
-    public ResponseEntity<Void> deactivateCardById(UUID id) {
-        cardService.deactivateCardService(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Override
-    public ResponseEntity<CardResponse> getCardById(UUID id) {
-        return ResponseEntity.ok(cardService.getCardService(id));
-    }
-
-    @Override
-    public ResponseEntity<CardIdPage> listCardIds(Integer page, Integer size) {
-        return ResponseEntity.ok(cardService.listCardIds(page, size));
+    public ResponseEntity<TransactionResponse> createTransaction(TransactionCreateRequest transaction) {
+        return ResponseEntity.ok(transactionService.createTransactionService(transaction));
     }
 }

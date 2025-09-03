@@ -1,8 +1,8 @@
-package com.areeba.cms.cmsmircoservice.handler;
+package com.areeba.cms.fraudmicroservice.handler;
 
-import com.areeba.cms.cmsmircoservice.exception.ResourceNotFoundException;
-import com.areeba.cms.cmsmircoservice.exception.TransactionRejectedException;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,24 +31,11 @@ public class RestExceptionHandler {
         ));
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> resourceNotFound(ResourceNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
-    }
-
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<?> badPathVar(MethodArgumentTypeMismatchException ex) {
         return ResponseEntity.badRequest().body(Map.of(
                 "error", "Invalid path variable",
                 "value", String.valueOf(ex.getValue())
-        ));
-    }
-
-    @ExceptionHandler(TransactionRejectedException.class)
-    public ResponseEntity<?> transactionRejected(TransactionRejectedException ex) {
-        return ResponseEntity.internalServerError().body(Map.of(
-                "error", "Transaction failed",
-                "value", ex.getMessage()
         ));
     }
 }

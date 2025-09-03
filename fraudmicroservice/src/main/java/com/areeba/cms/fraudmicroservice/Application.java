@@ -1,4 +1,4 @@
-package com.areeba.cms.cmsmircoservice;
+package com.areeba.cms.fraudmicroservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

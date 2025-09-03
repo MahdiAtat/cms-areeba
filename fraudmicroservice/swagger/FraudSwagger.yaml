@@ -1,431 +1,71 @@
 swagger: "2.0"
 info:
-  title: "Card, Account & Transaction Service"
+  title: "Fraud Detection Service"
   version: "1.0.0"
-  description: "REST APIs to manage accounts, cards, and transactions."
-host: "localhost:8080"
-basePath: "/cms/v1"
-schemes: ["http"]
-
-tags:
-  - name: "Accounts"
-    description: "CRUD operations on accounts"
-  - name: "Cards"
-    description: "Create/activate/deactivate cards and fetch details"
-  - name: "Transactions"
-    description: "Create transactions (debit/credit) with validations"
-
+  description: >
+    Evaluates transactions for potential fraud based on amount and frequency:
+    - Reject if amount > 10,000
+    - Reject if ≥ 8 transactions for the same card within the last hour
+host: "localhost:8090"
+basePath: "/fraud/v1"
+schemes: ["https"]
 consumes: ["application/json"]
 produces: ["application/json"]
 
+tags:
+  - name: "Fraud"
+    description: "Fraud evaluation endpoints"
+
 paths:
-  /accounts:
+  /evaluate:
     post:
-      tags: ["Accounts"]
-      summary: "Create account"
-      operationId: createAccount
+      tags: ["Fraud"]
+      summary: "Evaluate a transaction for fraud and record the attempt"
+      operationId: evaluateTransaction
       parameters:
         - in: "body"
-          name: "account"
+          name: "fraudCheckRequest"
           required: true
           schema:
-            $ref: "#/definitions/AccountCreateRequest"
+            $ref: "#/definitions/FraudCheckRequest"
       responses:
-        "201":
-          description: "Account created"
+        "200":
+          description: "Evaluation result"
           schema:
-            $ref: "#/definitions/AccountResponse"
+            $ref: "#/definitions/FraudCheckResponse"
         "400":
           description: "Validation error"
           schema:
             $ref: "#/definitions/ErrorResponse"
-
-  /accounts/{id}/carIds:
-    get:
-      tags: ["Accounts"]
-      summary: "List all cardIds for a specific accountId"
-      operationId: listCardIdsForAccount
-      parameters:
-        - $ref: "#/parameters/PathId"
-        - in: query
-          name: page
-          type: integer
-          default: 0
-          minimum: 0
-        - in: query
-          name: size
-          type: integer
-          default: 50
-          minimum: 1
-          maximum: 50
-          description: "Page size"
-      responses:
-        "200":
-          description: "OK"
-          schema:
-            $ref: "#/definitions/AccountCardIdsResponse"
-        "404":
-          description: "Account not found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-  /accounts/{id}:
-    get:
-      tags: ["Accounts"]
-      summary: "Get account by ID"
-      operationId: getAccountById
-      parameters:
-        - $ref: "#/parameters/PathId"
-      responses:
-        "200":
-          description: "OK"
-          schema:
-            $ref: "#/definitions/AccountResponse"
-        "404":
-          description: "Account not found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-    put:
-      tags: ["Accounts"]
-      summary: "Update account"
-      operationId: updateAccountById
-      parameters:
-        - $ref: "#/parameters/PathId"
-        - in: "body"
-          name: "account"
-          required: true
-          schema:
-            $ref: "#/definitions/AccountCreateRequest"
-      responses:
-        "200":
-          description: "Updated"
-          schema:
-            $ref: "#/definitions/AccountResponse"
-        "400":
-          description: "Validation error"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        "404":
-          description: "Account not found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-    delete:
-      tags: ["Accounts"]
-      summary: "Delete account"
-      operationId: deleteAccountById
-      parameters:
-        - $ref: "#/parameters/PathId"
-      responses:
-        "204":
-          description: "Deleted"
-        "404":
-          description: "Account not found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-  /cards:
-    post:
-      tags: ["Cards"]
-      summary: "Create card (initially INACTIVE)"
-      operationId: createCard
-      parameters:
-        - in: "body"
-          name: "card"
-          required: true
-          schema:
-            $ref: "#/definitions/CardCreateRequest"
-      responses:
-        "201":
-          description: "Card created"
-          schema:
-            $ref: "#/definitions/CardResponse"
-        "400":
-          description: "Validation error"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        "404":
-          description: "Account not found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-  /cards/ids:
-    get:
-      tags: ["Cards"]
-      summary: "List all IDs of card"
-      operationId: listCardIds
-      parameters:
-        - in: query
-          name: page
-          type: integer
-          default: 0
-          minimum: 0
-        - in: query
-          name: size
-          type: integer
-          default: 50
-          maximum: 50
-      responses:
-        "200":
-          description: "OK"
-          schema:
-            $ref: "#/definitions/CardIdPage"
-        "404":
-          description: "Card not found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-  /cards/{id}:
-    get:
-      tags: ["Cards"]
-      summary: "Get card by ID"
-      operationId: getCardById
-      parameters:
-        - $ref: "#/parameters/PathId"
-      responses:
-        "200":
-          description: "OK"
-          schema:
-            $ref: "#/definitions/CardResponse"
-        "404":
-          description: "Card not found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-  /cards/{id}/activate:
-    post:
-      tags: ["Cards"]
-      summary: "Activate card"
-      operationId: activateCardById
-      parameters:
-        - $ref: "#/parameters/PathId"
-      responses:
-        "204":
-          description: "Activated"
-        "404":
-          description: "Card not found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-  /cards/{id}/deactivate:
-    post:
-      tags: ["Cards"]
-      summary: "Deactivate card"
-      operationId: deactivateCardById
-      parameters:
-        - $ref: "#/parameters/PathId"
-      responses:
-        "204":
-          description: "Deactivated"
-        "404":
-          description: "Card not found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-  /transactions:
-    post:
-      tags: ["Transactions"]
-      summary: "Create transaction (Debit/ Credit)"
-      description: "Performs card & account validations and then calls Fraud Service. On approval, updates account balance and records transaction."
-      operationId: createTransaction
-      parameters:
-        - in: "body"
-          name: "transaction"
-          required: true
-          schema:
-            $ref: "#/definitions/TransactionCreateRequest"
-      responses:
-        "201":
-          description: "Transaction recorded"
-          schema:
-            $ref: "#/definitions/TransactionResponse"
-        "400":
-          description: "Business rule/validation error (e.g., inactive/expired/insufficient funds/fraud)"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-        "404":
-          description: "Account or card not found"
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
-parameters:
-  PathId:
-    name: "id"
-    in: "path"
-    description: "Resource ID (UUID)"
-    required: true
-    type: "string"
-    format: "uuid"
 
 definitions:
-  AccountStatus:
-    type: "string"
-    enum: ["ACTIVE", "INACTIVE"]
-
-  CardStatus:
-    type: "string"
-    enum: ["ACTIVE", "INACTIVE"]
-
-  TransactionType:
-    type: "string"
-    enum: ["C", "D"]
-
-  AccountCreateRequest:
+  FraudCheckRequest:
     type: "object"
-    required: ["status", "balance"]
+    required: ["cardId", "amount", "timestamp"]
     properties:
-      status:
-        $ref: "#/definitions/AccountStatus"
-      balance:
-        type: "number"
-        format: "double"
-        example: 5000.00
-
-  AccountResponse:
-    type: "object"
-    required: ["id", "status", "balance"]
-    properties:
-      id:
-        type: "string"
-        format: "uuid"
-      status:
-        $ref: "#/definitions/AccountStatus"
-      balance:
-        type: "number"
-        format: "double"
-
-  CardCreateRequest:
-    type: "object"
-    required: ["accountId", "cardNumber", "expiry"]
-    properties:
-      accountId:
-        type: "string"
-        format: "uuid"
-      cardNumber:
-        type: "string"
-        description: "Raw PAN; stored encrypted at rest"
-        example: "4111111111111111"
-      expiry:
-        type: "string"
-        format: "date"
-        example: "2030-12-31"
-
-  CardResponse:
-    type: "object"
-    required: ["id", "accountId", "status", "expiry", "maskedCard"]
-    properties:
-      id:
-        type: "string"
-        format: "uuid"
-      accountId:
-        type: "string"
-        format: "uuid"
-      status:
-        $ref: "#/definitions/CardStatus"
-      expiry:
-        type: "string"
-        format: "date"
-      maskedCard:
-        type: "string"
-        description: "Masked PAN (e.g., **** **** **** 1111)"
-
-  CardIdPage:
-    type: "object"
-    required: ["cardIds","page","size","totalElements","totalPages","hasNext"]
-    properties:
-      cardIds:
-        type: array
-        items:
-          type: string
-          format: uuid
-      page:
-        type: integer
-        example: 0
-      size:
-        type: integer
-        example: 50
-      totalElements:
-        type: integer
-        format: int64
-        example: 1234
-      totalPages:
-        type: integer
-        example: 25
-      hasNext:
-        type: boolean
-        example: true
-
-  AccountCardIdsResponse:
-    type: object
-    required: ["accountId","cardIds","page","size","totalElements","totalPages","hasNext"]
-    properties:
-      accountId:
-        type: string
-        format: uuid
-      cardIds:
-        type: array
-        items:
-          type: string
-          format: uuid
-      page:
-        type: integer
-        example: 0
-      size:
-        type: integer
-        example: 50
-      totalElements:
-        type: integer
-        format: int64
-        example: 1234
-      totalPages:
-        type: integer
-        example: 25
-      hasNext:
-        type: boolean
-        example: true
-
-  TransactionCreateRequest:
-    type: "object"
-    required: ["accountId", "cardId", "transactionAmount", "transactionType"]
-    properties:
-      accountId:
-        type: "string"
-        format: "uuid"
       cardId:
         type: "string"
         format: "uuid"
-      transactionAmount:
+      amount:
         type: "number"
         format: "double"
-        minimum: 0.01
-        example: 100.00
-      transactionType:
-        $ref: "#/definitions/TransactionType"
-
-  TransactionResponse:
-    type: "object"
-    required:
-      ["id","accountId","cardId","transactionAmount","transactionType","transactionDate","response"]
-    properties:
-      id:
-        type: "string"
-        format: "uuid"
-      accountId:
-        type: "string"
-        format: "uuid"
-      cardId:
-        type: "string"
-        format: "uuid"
-      transactionAmount:
-        type: "number"
-        format: "double"
-      transactionType:
-        $ref: "#/definitions/TransactionType"
-      transactionDate:
+        example: 1500.00
+      timestamp:
         type: "string"
         format: "date-time"
-      response:
+        example: "2025-09-02T09:00:00Z"
+
+  FraudCheckResponse:
+    type: "object"
+    required: ["approved", "reason"]
+    properties:
+      approved:
+        type: "boolean"
+        example: true
+      reason:
         type: "string"
-        enum: ["APPROVED", "REJECTED"]
+        description: "OK, AMOUNT_EXCEEDS_LIMIT, or FREQUENCY_EXCEEDS_LIMIT"
+        example: "OK"
 
   ErrorResponse:
     type: "object"

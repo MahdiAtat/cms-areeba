@@ -19,7 +19,7 @@ consumes: ["application/json"]
 produces: ["application/json"]
 
 paths:
-  /api/accounts:
+  /accounts:
     post:
       tags: ["Accounts"]
       summary: "Create account"
@@ -31,7 +31,7 @@ paths:
           schema:
             $ref: "#/definitions/AccountCreateRequest"
       responses:
-        "200":
+        "201":
           description: "Account created"
           schema:
             $ref: "#/definitions/AccountResponse"
@@ -40,7 +40,36 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/accounts/{id}:
+  /accounts/{id}/carIds:
+    get:
+      tags: ["Accounts"]
+      summary: "List all cardIds for a specific accountId"
+      operationId: listCardIdsForAccount
+      parameters:
+        - $ref: "#/parameters/PathId"
+        - in: query
+          name: page
+          type: integer
+          default: 0
+          minimum: 0
+        - in: query
+          name: size
+          type: integer
+          default: 50
+          minimum: 1
+          maximum: 50
+          description: "Page size"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AccountCardIdsResponse"
+        "404":
+          description: "Account not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /accounts/{id}:
     get:
       tags: ["Accounts"]
       summary: "Get account by ID"
@@ -87,10 +116,134 @@ paths:
       parameters:
         - $ref: "#/parameters/PathId"
       responses:
-        "200":
+        "204":
           description: "Deleted"
         "404":
           description: "Account not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /cards:
+    post:
+      tags: ["Cards"]
+      summary: "Create card (initially INACTIVE)"
+      operationId: createCard
+      parameters:
+        - in: "body"
+          name: "card"
+          required: true
+          schema:
+            $ref: "#/definitions/CardCreateRequest"
+      responses:
+        "201":
+          description: "Card created"
+          schema:
+            $ref: "#/definitions/CardResponse"
+        "400":
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "404":
+          description: "Account not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /cards/ids:
+    get:
+      tags: ["Cards"]
+      summary: "List all IDs of card"
+      operationId: listCardIds
+      parameters:
+        - in: query
+          name: page
+          type: integer
+          default: 0
+          minimum: 0
+        - in: query
+          name: size
+          type: integer
+          default: 50
+          maximum: 50
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CardIdPage"
+        "404":
+          description: "Card not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /cards/{id}:
+    get:
+      tags: ["Cards"]
+      summary: "Get card by ID"
+      operationId: getCardById
+      parameters:
+        - $ref: "#/parameters/PathId"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CardResponse"
+        "404":
+          description: "Card not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /cards/{id}/activate:
+    post:
+      tags: ["Cards"]
+      summary: "Activate card"
+      operationId: activateCardById
+      parameters:
+        - $ref: "#/parameters/PathId"
+      responses:
+        "204":
+          description: "Activated"
+        "404":
+          description: "Card not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /cards/{id}/deactivate:
+    post:
+      tags: ["Cards"]
+      summary: "Deactivate card"
+      operationId: deactivateCardById
+      parameters:
+        - $ref: "#/parameters/PathId"
+      responses:
+        "204":
+          description: "Deactivated"
+        "404":
+          description: "Card not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /transactions:
+    post:
+      tags: ["Transactions"]
+      summary: "Create transaction (Debit/ Credit)"
+      description: "Performs card & account validations and then calls Fraud Service. On approval, updates account balance and records transaction."
+      operationId: createTransaction
+      parameters:
+        - in: "body"
+          name: "transaction"
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionCreateRequest"
+      responses:
+        "201":
+          description: "Transaction recorded"
+          schema:
+            $ref: "#/definitions/TransactionResponse"
+        "400":
+          description: "Business rule/validation error (e.g., inactive/expired/insufficient funds/fraud)"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "404":
+          description: "Account or card not found"
           schema:
             $ref: "#/definitions/ErrorResponse"
 
@@ -120,9 +273,9 @@ definitions:
     type: "object"
     required: ["status", "balance"]
     properties:
-      -status:
+      status:
         $ref: "#/definitions/AccountStatus"
-      -balance:
+      balance:
         type: "number"
         format: "double"
         example: 5000.00
@@ -131,12 +284,12 @@ definitions:
     type: "object"
     required: ["id", "status", "balance"]
     properties:
-      -id:
+      id:
         type: "string"
         format: "uuid"
-      -status:
+      status:
         $ref: "#/definitions/AccountStatus"
-      -balance:
+      balance:
         type: "number"
         format: "double"
 
@@ -144,14 +297,14 @@ definitions:
     type: "object"
     required: ["accountId", "cardNumber", "expiry"]
     properties:
-      -accountId:
+      accountId:
         type: "string"
         format: "uuid"
-      -cardNumber:
+      cardNumber:
         type: "string"
         description: "Raw PAN; stored encrypted at rest"
         example: "4111111111111111"
-      -expiry:
+      expiry:
         type: "string"
         format: "date"
         example: "2030-12-31"
@@ -160,37 +313,92 @@ definitions:
     type: "object"
     required: ["id", "accountId", "status", "expiry", "maskedCard"]
     properties:
-      -id:
+      id:
         type: "string"
         format: "uuid"
-      -accountId:
+      accountId:
         type: "string"
         format: "uuid"
-      -status:
+      status:
         $ref: "#/definitions/CardStatus"
-      -expiry:
+      expiry:
         type: "string"
         format: "date"
-      -maskedCard:
+      maskedCard:
         type: "string"
         description: "Masked PAN (e.g., **** **** **** 1111)"
+
+  CardIdPage:
+    type: "object"
+    required: ["cardIds","page","size","totalElements","totalPages","hasNext"]
+    properties:
+      cardIds:
+        type: array
+        items:
+          type: string
+          format: uuid
+      page:
+        type: integer
+        example: 0
+      size:
+        type: integer
+        example: 50
+      totalElements:
+        type: integer
+        format: int64
+        example: 1234
+      totalPages:
+        type: integer
+        example: 25
+      hasNext:
+        type: boolean
+        example: true
+
+  AccountCardIdsResponse:
+    type: object
+    required: ["accountId","cardIds","page","size","totalElements","totalPages","hasNext"]
+    properties:
+      accountId:
+        type: string
+        format: uuid
+      cardIds:
+        type: array
+        items:
+          type: string
+          format: uuid
+      page:
+        type: integer
+        example: 0
+      size:
+        type: integer
+        example: 50
+      totalElements:
+        type: integer
+        format: int64
+        example: 1234
+      totalPages:
+        type: integer
+        example: 25
+      hasNext:
+        type: boolean
+        example: true
 
   TransactionCreateRequest:
     type: "object"
     required: ["accountId", "cardId", "transactionAmount", "transactionType"]
     properties:
-      -accountId:
+      accountId:
         type: "string"
         format: "uuid"
-      -cardId:
+      cardId:
         type: "string"
         format: "uuid"
-      -transactionAmount:
+      transactionAmount:
         type: "number"
         format: "double"
         minimum: 0.01
         example: 100.00
-      -transactionType:
+      transactionType:
         $ref: "#/definitions/TransactionType"
 
   TransactionResponse:
@@ -198,30 +406,30 @@ definitions:
     required:
       ["id","accountId","cardId","transactionAmount","transactionType","transactionDate","response"]
     properties:
-      -id:
+      id:
         type: "string"
         format: "uuid"
-      -accountId:
+      accountId:
         type: "string"
         format: "uuid"
-      -cardId:
+      cardId:
         type: "string"
         format: "uuid"
-      -transactionAmount:
+      transactionAmount:
         type: "number"
         format: "double"
-      -transactionType:
+      transactionType:
         $ref: "#/definitions/TransactionType"
-      -transactionDate:
+      transactionDate:
         type: "string"
         format: "date-time"
-      -response:
+      response:
         type: "string"
         enum: ["APPROVED", "REJECTED"]
 
   ErrorResponse:
     type: "object"
     properties:
-      -error:
+      error:
         type: "string"
-        example: "Insufficient balance"
+        example: "_ERR"

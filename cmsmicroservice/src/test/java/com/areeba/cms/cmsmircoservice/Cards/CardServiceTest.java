@@ -1,4 +1,4 @@
-package com.areeba.cms.cmsmircoservice.Cards.Card;
+package com.areeba.cms.cmsmircoservice.Cards;
 
 import com.areeba.cms.cmsmicroservice.type.*;
 import com.areeba.cms.cmsmircoservice.accounts.service.AccountService;

@@ -1,10 +1,11 @@
--- create extension if not exists "pgcrypto";
-
-create table if not exists cards (
+create table if not exists transactions (
     id uuid primary key default gen_random_uuid(),
-    account_id uuid not null references accounts(id) on delete cascade,
-    status varchar(16) not null,
-    expiry date not null,
-    card_number varchar(512) not null unique
+    account_id uuid not null references accounts(id),
+    card_id uuid not null references cards(id),
+    transaction_amount numeric(19,2) not null,
+    transaction_type varchar(1) not null,
+    transaction_date timestamptz not null,
+    response varchar(16) not null
     );
-create index if not exists ix_cards_account on cards(account_id);
+create index if not exists ix_tx_account_date on transactions(account_id, transaction_date);
+create index if not exists ix_tx_card_date on transactions(card_id, transaction_date);

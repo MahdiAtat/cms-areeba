@@ -1,8 +1,5 @@
 package com.areeba.cms.fraudmicroservice.type;
 
-import com.areeba.cms.cmsmicroservice.type.TransactionType;
-import com.areeba.cms.cmsmircoservice.type.Account;
-import com.areeba.cms.cmsmircoservice.type.Card;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,10 +11,10 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "fraud")
+@Table(name = "fraud_events")
 @Getter
 @Setter
-public class Fraud {
+public class FraudEvent {
 
     @Id
     @GeneratedValue

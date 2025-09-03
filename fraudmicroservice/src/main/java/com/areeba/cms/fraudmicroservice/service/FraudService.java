@@ -1,10 +1,10 @@
 package com.areeba.cms.fraudmicroservice.service;
 
-import com.areeba.cms.cmsmicroservice.type.TransactionCreateRequest;
-import com.areeba.cms.cmsmicroservice.type.TransactionResponse;
+import com.areeba.cms.fraudmicroservice.type.FraudCheckRequest;
+import com.areeba.cms.fraudmicroservice.type.FraudCheckResponse;
 
-public interface TransactionService {
+public interface FraudService {
 
-    TransactionResponse createTransactionService(TransactionCreateRequest request);
+    FraudCheckResponse evaluateTransactionService(FraudCheckRequest request);
 
 }

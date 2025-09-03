@@ -1,4 +1,4 @@
-package com.areeba.cms.cmsmircoservice.Cards.Accounts;
+package com.areeba.cms.cmsmircoservice.Accounts;
 
 import com.areeba.cms.cmsmicroservice.type.AccountCreateRequest;
 import com.areeba.cms.cmsmicroservice.type.AccountResponse;

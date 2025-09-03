@@ -1,7 +1,7 @@
 package com.areeba.cms.cmsmircoservice.exception;
 
-public class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(String message) {
+public class TransactionRejectedException extends RuntimeException {
+    public TransactionRejectedException(String message) {
         super(message);
     }
 }
