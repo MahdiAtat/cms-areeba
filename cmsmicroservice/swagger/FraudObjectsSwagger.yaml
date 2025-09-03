@@ -1,0 +1,64 @@
+swagger: "2.0"
+info:
+  title: "Fraud Objects"
+  version: "1.0.0"
+  description: "Fraud Object"
+host: ""
+basePath: "/"
+
+paths:
+  /:
+    post:
+      tags: ["Fraud"]
+      summary: "pass generator"
+      parameters:
+        - in: "body"
+          name: "fraudCheckRequest"
+          required: true
+          schema:
+            $ref: "#/definitions/FraudCheckRequest"
+      responses:
+        "200":
+          description: "Evaluation result"
+          schema:
+            $ref: "#/definitions/FraudCheckResponse"
+        "400":
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+definitions:
+  FraudCheckRequest:
+    type: "object"
+    required: ["cardId", "amount", "timestamp"]
+    properties:
+      cardId:
+        type: "string"
+        format: "uuid"
+      amount:
+        type: "number"
+        format: "double"
+        example: 1500.00
+      timestamp:
+        type: "string"
+        format: "date-time"
+        example: "2025-09-02T09:00:00Z"
+
+  FraudCheckResponse:
+    type: "object"
+    required: ["approved", "reason"]
+    properties:
+      approved:
+        type: "boolean"
+        example: true
+      reason:
+        type: "string"
+        description: "OK, AMOUNT_EXCEEDS_LIMIT, or FREQUENCY_EXCEEDS_LIMIT"
+        example: "OK"
+
+  ErrorResponse:
+    type: "object"
+    properties:
+      error:
+        type: "string"
+        example: "_ERR"

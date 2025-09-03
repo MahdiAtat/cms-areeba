@@ -1,0 +1,227 @@
+swagger: "2.0"
+info:
+  title: "Card, Account & Transaction Service"
+  version: "1.0.0"
+  description: "REST APIs to manage accounts, cards, and transactions."
+host: "localhost:8080"
+basePath: "/cms/v1"
+schemes: ["https"]
+
+tags:
+  - name: "Accounts"
+    description: "CRUD operations on accounts"
+  - name: "Cards"
+    description: "Create/activate/deactivate cards and fetch details"
+  - name: "Transactions"
+    description: "Create transactions (debit/credit) with validations"
+
+consumes: ["application/json"]
+produces: ["application/json"]
+
+paths:
+  /api/accounts:
+    post:
+      tags: ["Accounts"]
+      summary: "Create account"
+      operationId: createAccount
+      parameters:
+        - in: "body"
+          name: "account"
+          required: true
+          schema:
+            $ref: "#/definitions/AccountCreateRequest"
+      responses:
+        "200":
+          description: "Account created"
+          schema:
+            $ref: "#/definitions/AccountResponse"
+        "400":
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /api/accounts/{id}:
+    get:
+      tags: ["Accounts"]
+      summary: "Get account by ID"
+      operationId: getAccountById
+      parameters:
+        - $ref: "#/parameters/PathId"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AccountResponse"
+        "404":
+          description: "Account not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      tags: ["Accounts"]
+      summary: "Update account"
+      operationId: updateAccountById
+      parameters:
+        - $ref: "#/parameters/PathId"
+        - in: "body"
+          name: "account"
+          required: true
+          schema:
+            $ref: "#/definitions/AccountCreateRequest"
+      responses:
+        "200":
+          description: "Updated"
+          schema:
+            $ref: "#/definitions/AccountResponse"
+        "400":
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "404":
+          description: "Account not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      tags: ["Accounts"]
+      summary: "Delete account"
+      operationId: deleteAccountById
+      parameters:
+        - $ref: "#/parameters/PathId"
+      responses:
+        "200":
+          description: "Deleted"
+        "404":
+          description: "Account not found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+parameters:
+  PathId:
+    name: "id"
+    in: "path"
+    description: "Resource ID (UUID)"
+    required: true
+    type: "string"
+    format: "uuid"
+
+definitions:
+  AccountStatus:
+    type: "string"
+    enum: ["ACTIVE", "INACTIVE"]
+
+  CardStatus:
+    type: "string"
+    enum: ["ACTIVE", "INACTIVE"]
+
+  TransactionType:
+    type: "string"
+    enum: ["C", "D"]
+
+  AccountCreateRequest:
+    type: "object"
+    required: ["status", "balance"]
+    properties:
+      -status:
+        $ref: "#/definitions/AccountStatus"
+      -balance:
+        type: "number"
+        format: "double"
+        example: 5000.00
+
+  AccountResponse:
+    type: "object"
+    required: ["id", "status", "balance"]
+    properties:
+      -id:
+        type: "string"
+        format: "uuid"
+      -status:
+        $ref: "#/definitions/AccountStatus"
+      -balance:
+        type: "number"
+        format: "double"
+
+  CardCreateRequest:
+    type: "object"
+    required: ["accountId", "cardNumber", "expiry"]
+    properties:
+      -accountId:
+        type: "string"
+        format: "uuid"
+      -cardNumber:
+        type: "string"
+        description: "Raw PAN; stored encrypted at rest"
+        example: "4111111111111111"
+      -expiry:
+        type: "string"
+        format: "date"
+        example: "2030-12-31"
+
+  CardResponse:
+    type: "object"
+    required: ["id", "accountId", "status", "expiry", "maskedCard"]
+    properties:
+      -id:
+        type: "string"
+        format: "uuid"
+      -accountId:
+        type: "string"
+        format: "uuid"
+      -status:
+        $ref: "#/definitions/CardStatus"
+      -expiry:
+        type: "string"
+        format: "date"
+      -maskedCard:
+        type: "string"
+        description: "Masked PAN (e.g., **** **** **** 1111)"
+
+  TransactionCreateRequest:
+    type: "object"
+    required: ["accountId", "cardId", "transactionAmount", "transactionType"]
+    properties:
+      -accountId:
+        type: "string"
+        format: "uuid"
+      -cardId:
+        type: "string"
+        format: "uuid"
+      -transactionAmount:
+        type: "number"
+        format: "double"
+        minimum: 0.01
+        example: 100.00
+      -transactionType:
+        $ref: "#/definitions/TransactionType"
+
+  TransactionResponse:
+    type: "object"
+    required:
+      ["id","accountId","cardId","transactionAmount","transactionType","transactionDate","response"]
+    properties:
+      -id:
+        type: "string"
+        format: "uuid"
+      -accountId:
+        type: "string"
+        format: "uuid"
+      -cardId:
+        type: "string"
+        format: "uuid"
+      -transactionAmount:
+        type: "number"
+        format: "double"
+      -transactionType:
+        $ref: "#/definitions/TransactionType"
+      -transactionDate:
+        type: "string"
+        format: "date-time"
+      -response:
+        type: "string"
+        enum: ["APPROVED", "REJECTED"]
+
+  ErrorResponse:
+    type: "object"
+    properties:
+      -error:
+        type: "string"
+        example: "Insufficient balance"
