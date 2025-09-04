@@ -1,14 +1,15 @@
 # Multi-stage build for CMS Microservice
-FROM maven:3.8.1 AS build
+#FROM maven:3.8.1 AS build
+FROM maven:3.9.8-eclipse-temurin-21 AS build
 
 # Install OpenJDK 21
-RUN microdnf update -y && microdnf install -y \
-    java-21-openjdk-devel \
-    && microdnf clean all
+#RUN microdnf update -y && microdnf install -y \
+#    java-21-openjdk-devel \
+#    && microdnf clean all
 
 # Set JAVA_HOME to Java 21
-ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
-ENV PATH=$JAVA_HOME/bin:$PATH
+#ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+#ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Set working directory
 WORKDIR /cms
@@ -30,16 +31,16 @@ WORKDIR /cms/cmsmicroservice
 RUN mvn clean package -DskipTests
 
 # Runtime stage
-FROM maven:3.8.1
+FROM eclipse-temurin:21-jre-alpine
 
 # Install OpenJDK 21
-RUN microdnf update -y && microdnf install -y \
-    java-21-openjdk-devel \
-    && microdnf clean all
+#RUN microdnf update -y && microdnf install -y \
+#    java-21-openjdk-devel \
+#    && microdnf clean all
 
 # Set JAVA_HOME to Java 21
-ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
-ENV PATH=$JAVA_HOME/bin:$PATH
+#ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+#ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Create cms user
 RUN groupadd -r cmsuser && useradd -r -g cmsuser cmsuser
@@ -55,7 +56,7 @@ RUN chown -R cmsuser:cmsuser /cms
 USER cmsuser
 
 # Expose port
-EXPOSE 8080
+EXPOSE 8090
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "cms.jar", "--spring.profiles.active=local"]

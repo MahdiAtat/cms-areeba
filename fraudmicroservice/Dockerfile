@@ -1,14 +1,15 @@
 # Multi-stage build for Fraud Microservice
-FROM maven:3.8.1 AS build
+#FROM maven:3.8.1 AS build
+FROM maven:3.9.8-eclipse-temurin-21 AS build
 
 # Install OpenJDK 21
-RUN microdnf update -y && microdnf install -y \
-    java-21-openjdk-devel \
-    && microdnf clean all
+#RUN microdnf update -y && microdnf install -y \
+#    java-21-openjdk-devel \
+#    && microdnf clean all
 
 # Set JAVA_HOME to Java 21
-ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
-ENV PATH=$JAVA_HOME/bin:$PATH
+#ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+#ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Set working directory
 WORKDIR /fraud
@@ -30,16 +31,16 @@ WORKDIR /fraud/fraudmicroservice
 RUN mvn clean package -DskipTests
 
 # Runtime stage
-FROM maven:3.8.1
+FROM eclipse-temurin:21-jre-alpine
 
 # Install OpenJDK 21
-RUN microdnf update -y && microdnf install -y \
-    java-21-openjdk-devel \
-    && microdnf clean all
+#RUN microdnf update -y && microdnf install -y \
+#    java-21-openjdk-devel \
+#    && microdnf clean all
 
 # Set JAVA_HOME to Java 21
-ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
-ENV PATH=$JAVA_HOME/bin:$PATH
+#ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+#ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Create fraud user
 RUN groupadd -r frauduser && useradd -r -g frauduser frauduser
