@@ -2,6 +2,7 @@ package com.areeba.cms.cmsmircoservice.handler;
 
 import com.areeba.cms.cmsmircoservice.exception.ResourceNotFoundException;
 import com.areeba.cms.cmsmircoservice.exception.TransactionRejectedException;
+import feign.FeignException;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -48,6 +49,14 @@ public class RestExceptionHandler {
     public ResponseEntity<?> transactionRejected(TransactionRejectedException ex) {
         return ResponseEntity.internalServerError().body(Map.of(
                 "error", "Transaction failed",
+                "value", ex.getMessage()
+        ));
+    }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<?> feignException(FeignException ex) {
+        return ResponseEntity.internalServerError().body(Map.of(
+                "error", "Fraud check failed",
                 "value", ex.getMessage()
         ));
     }

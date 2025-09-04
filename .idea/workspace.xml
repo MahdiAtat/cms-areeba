@@ -4,229 +4,75 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a139d677-cec8-4233-83f0-4cb5be759cb1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/controller/AccountsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/repo/AccountRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/AccountService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/impl/AccountServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/controller/CardsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/repo/CardRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/service/CardService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/service/impl/CardServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/config/CryptoConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/config/CryptoProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/config/FraudFeignConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/exception/ResourceNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/exception/TransactionRejectedException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/handler/RestExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/rest/FraudClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/controller/TransactionsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/repo/TransactionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/TransactionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/type/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/type/Card.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/type/Transaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/utils/AttributeEncryptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/utils/EncryptorHolder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/resources/application-local.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/resources/db/postgresql/V1__acounts.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/resources/db/postgresql/V2__cards.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/resources/db/postgresql/V3__transactions.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/test/java/com/areeba/cms/cmsmircoservice/Accounts/AccountServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/test/java/com/areeba/cms/cmsmircoservice/Cards/CardServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/test/java/com/areeba/cms/cmsmircoservice/Transactions/TransactionServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/src/test/resources/application-test.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/swagger/CmsSwagger.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmsmicroservice/swagger/FraudObjectsSwagger.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/controller/FraudController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/handler/RestExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/repo/FraudRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/service/FraudService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/service/impl/FraudServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/type/FraudEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/resources/application-local.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/resources/db/postgresql/V1__fraudEvents.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/test/java/com/areeba/cms/fraudmicroservice/Fraud/FraudServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/src/test/resources/application-test.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fraudmicroservice/swagger/FraudSwagger.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    <list default="true" id="d279c1fd-5f9d-4b76-bdc2-6dbc2853fb81" name="Changes" comment="Initial Commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/repo/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/repo/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/impl/AccountServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/repo/CardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/repo/CardRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/service/CardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/service/CardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/service/impl/CardServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/service/impl/CardServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/config/CryptoConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/config/CryptoConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/config/CryptoProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/config/CryptoProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/config/FraudFeignConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/handler/RestExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/handler/RestExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/rest/FraudClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/rest/FraudClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/repo/TransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/repo/TransactionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/TransactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/utils/AttributeEncryptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/utils/AttributeEncryptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/utils/EncryptorHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/utils/EncryptorHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/resources/application-local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/repo/FraudRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/repo/FraudRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/service/FraudService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/service/FraudService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/service/impl/FraudServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/service/impl/FraudServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Interface" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
-  <component name="ProjectId" id="3287mi8XIXCA85RbkHTwEBi0JRu" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectViewState">
-    <option name="autoscrollFromSource" value="true" />
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.AccountServiceTest.executor": "Run",
-    "JUnit.AccountServiceTest.updateAccountService_OK.executor": "Run",
-    "JUnit.CardServiceTest.activateCardService_sets_status_ACTIVE.executor": "Run",
-    "JUnit.CardServiceTest.activateCardService_throwsException.executor": "Run",
-    "JUnit.CardServiceTest.createCardService_OK.executor": "Run",
-    "JUnit.CardServiceTest.deactivateCardService.executor": "Run",
-    "JUnit.CardServiceTest.deactivateCardService_throwsException.executor": "Run",
-    "JUnit.CardServiceTest.executor": "Run",
-    "JUnit.CardServiceTest.getCardService.executor": "Run",
-    "JUnit.CardServiceTest.getCardService_notFound_throws.executor": "Run",
-    "JUnit.CardServiceTest.getCardService_throwsException.executor": "Run",
-    "JUnit.CardServiceTest.listCardIdsByAccount_calls_repo_with_capped_size_and_maps_page.executor": "Run",
-    "JUnit.CardServiceTest.listCardIds_calls_repo_with_capped_size_and_maps_page.executor": "Run",
-    "JUnit.FraudServiceTest.executor": "Run",
-    "JUnit.TransactionServiceTest.creditApprovedAndBalanceIncreased.executor": "Run",
-    "JUnit.TransactionServiceTest.debitApprovedAndBalanceReduced.executor": "Debug",
-    "JUnit.TransactionServiceTest.debitDeclinedCardNotActive.executor": "Run",
-    "JUnit.TransactionServiceTest.debitDeclinedInsufficientBalance.executor": "Run",
-    "JUnit.TransactionServiceTest.executor": "Debug",
-    "Maven.cms [clean].executor": "Run",
-    "Maven.cms [compile].executor": "Run",
-    "Maven.cms-microservice [clean].executor": "Run",
-    "Maven.cms-microservice [compile].executor": "Run",
-    "Maven.cmsmicroservice [clean].executor": "Run",
-    "Maven.cmsmicroservice [compile].executor": "Run",
-    "Maven.fraudmicroservice [clean].executor": "Run",
-    "Maven.fraudmicroservice [compile].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.Application (1).executor": "Run",
-    "Spring Boot.Application.executor": "Run",
-    "Spring Boot.Fraud.executor": "Run",
-    "Spring Boot.cms.executor": "Run",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/brt.matat/Desktop/cms/fraudmicroservice/src/test",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MAtat10&quot;
   }
-}]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\brt.matat\Desktop\cms\fraudmicroservice\src\test" />
-      <recent name="C:\Users\brt.matat\Desktop\cms\fraudmicroservice\src\test\java" />
-      <recent name="C:\Users\brt.matat\Desktop\cms\cmsmicroservice\src\test" />
-      <recent name="C:\Users\brt.matat\Desktop\cms\cmsmicroservice\swagger" />
-      <recent name="C:\Users\brt.matat\Desktop\cms\swagger" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\brt.matat\Desktop\cms\cmsmicroservice\src\test\java\com\areeba\cms\cmsmircoservice" />
-      <recent name="C:\Users\brt.matat\Desktop\cms\fraudmicroservice\src\main\resources\db" />
-      <recent name="C:\Users\brt.matat\Desktop\cms\cmsmicroservice\src\main\resources\db\postgresql" />
-      <recent name="C:\Users\brt.matat\Desktop\cms\cmsmicroservice\src\main\resources\db" />
-      <recent name="C:\Users\brt.matat\Desktop\cms\cmsmicroservice\src\main\resources" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.areeba.cms.fraudmicroservice" />
-      <recent name="com.areeba.cms.cmsmircoservice.exception" />
-      <recent name="com.areeba.cms.cmsmircoservice" />
-    </key>
+}</component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="e12cb161-8df4-4ca6-ada9-4ae70f69286f" />
   </component>
-  <component name="RunManager" selected="Spring Boot.Application">
-    <configuration name="CardServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="cmsmicroservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Cards.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Cards" />
-      <option name="MAIN_CLASS_NAME" value="Cards.CardServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CardServiceTest.listCardIdsByAccount_calls_repo_with_capped_size_and_maps_page" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="cmsmicroservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Cards.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Cards" />
-      <option name="MAIN_CLASS_NAME" value="Cards.CardServiceTest" />
-      <option name="METHOD_NAME" value="listCardIdsByAccount_calls_repo_with_capped_size_and_maps_page" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CardServiceTest.listCardIds_calls_repo_with_capped_size_and_maps_page" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="cmsmicroservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Cards.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="Cards" />
-      <option name="MAIN_CLASS_NAME" value="Cards.CardServiceTest" />
-      <option name="METHOD_NAME" value="listCardIds_calls_repo_with_capped_size_and_maps_page" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="FraudServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="fraudmicroservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.areeba.cms.fraudmicroservice.Fraud.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.areeba.cms.fraudmicroservice.Fraud" />
-      <option name="MAIN_CLASS_NAME" value="com.areeba.cms.fraudmicroservice.Fraud.FraudServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MahdiAtat/cms-areeba.git&quot;,
+    &quot;accountId&quot;: &quot;20da9fba-bccc-4135-a6d0-cfb840aafa4f&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.cmsmicroservice [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.cmsmicroservice [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.fraudmicroservice [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.fraudmicroservice [compile].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;Spring Boot.Application.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+  }
+}</component>
+  <component name="RunManager">
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="local" />
       <module name="cmsmicroservice" />
@@ -241,153 +87,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="JUnit.CardServiceTest" />
-      <item itemvalue="JUnit.CardServiceTest.listCardIdsByAccount_calls_repo_with_capped_size_and_maps_page" />
-      <item itemvalue="JUnit.CardServiceTest.listCardIds_calls_repo_with_capped_size_and_maps_page" />
-      <item itemvalue="JUnit.FraudServiceTest" />
-      <item itemvalue="Spring Boot.Application" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.Application" />
-        <item itemvalue="JUnit.FraudServiceTest" />
-        <item itemvalue="JUnit.CardServiceTest" />
-        <item itemvalue="JUnit.CardServiceTest.listCardIds_calls_repo_with_capped_size_and_maps_page" />
-        <item itemvalue="JUnit.CardServiceTest.listCardIdsByAccount_calls_repo_with_capped_size_and_maps_page" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
-      </set>
-    </attachedChunks>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="a139d677-cec8-4233-83f0-4cb5be759cb1" name="Changes" comment="" />
-      <created>1756790508591</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1756790508591</updated>
-      <workItem from="1756790509441" duration="58524000" />
-    </task>
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/impl/AccountServiceImpl.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/controller/AccountsController.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/impl/AccountServiceImpl.java</url>
-          <line>51</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/controller/AccountsController.java</url>
-          <line>26</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/impl/AccountServiceImpl.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/impl/AccountServiceImpl.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/controller/CardsController.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/controller/CardsController.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/impl/AccountServiceImpl.java</url>
-          <line>40</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/cards/service/impl/CardServiceImpl.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/controller/TransactionsController.java</url>
-          <line>20</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java</url>
-          <line>82</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java</url>
-          <line>102</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/service/impl/FraudServiceImpl.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/fraudmicroservice/src/main/java/com/areeba/cms/fraudmicroservice/controller/FraudController.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java</url>
-          <line>63</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java</url>
-          <line>68</line>
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java</url>
-          <line>98</line>
-          <option name="timeStamp" value="40" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/cmsmicroservice/src/test/java/com/areeba/cms/cmsmircoservice/Transactions/TransactionServiceTest.java</url>
-          <line>75</line>
-          <option name="timeStamp" value="41" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
   </component>
 </project>

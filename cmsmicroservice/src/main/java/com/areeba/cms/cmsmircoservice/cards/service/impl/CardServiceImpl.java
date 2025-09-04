@@ -15,6 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+/**
+ * Card service: create, activate/deactivate, read, and list card IDs.
+ * <p>Write methods run in a transaction; status/field changes are flushed by JPA dirty checking.</p>
+ * <p>Responses include a masked PAN (last 4 digits only).</p>
+ */
 @Service
 public class CardServiceImpl implements CardService {
 
@@ -26,6 +31,14 @@ public class CardServiceImpl implements CardService {
         this.accountService = accountService;
     }
 
+    /**
+     * Creates a new card under the target account.
+     * <p>New cards start as {@code INACTIVE}.</p>
+     *
+     * @param cardCreateRequest account id, raw PAN, expiry
+     * @return created card view (masked PAN, generated id)
+     * @throws ResourceNotFoundException if the account does not exist
+     */
     @Transactional
     @Override
     public CardResponse createCardService(CardCreateRequest cardCreateRequest) {
@@ -39,6 +52,12 @@ public class CardServiceImpl implements CardService {
         return toResponse(card);
     }
 
+    /**
+     * Turns the card status to {@code ACTIVE}.
+     *
+     * @param id card id
+     * @throws ResourceNotFoundException if the card does not exist
+     */
     @Transactional
     @Override
     public void activateCardService(UUID id) {
@@ -46,6 +65,12 @@ public class CardServiceImpl implements CardService {
         card.setStatus(CardStatus.ACTIVE);
     }
 
+    /**
+     * Turns the card status to {@code INACTIVE}.
+     *
+     * @param id card id
+     * @throws ResourceNotFoundException if the card does not exist
+     */
     @Transactional
     @Override
     public void deactivateCardService(UUID id) {
@@ -53,6 +78,13 @@ public class CardServiceImpl implements CardService {
         card.setStatus(CardStatus.INACTIVE);
     }
 
+    /**
+     * Returns a single card view (masked PAN).
+     *
+     * @param id card id
+     * @return card details
+     * @throws ResourceNotFoundException if the card does not exist
+     */
     @Transactional(readOnly = true)
     @Override
     public CardResponse getCardService(UUID id) {
@@ -60,6 +92,13 @@ public class CardServiceImpl implements CardService {
         return toResponse(card);
     }
 
+    /**
+     * Maps a {@link Card} entity to its API response.
+     * <p>Masking rule: show only the last 4 digits, or {@code "****"} if missing/too short.</p>
+     *
+     * @param card managed entity
+     * @return response DTO with masked PAN
+     */
     private CardResponse toResponse(Card card) {
         String plain = card.getCardNumber();
         String masked = (plain == null || plain.length() < 4) ? "****" : "**** **** **** " + plain.substring(plain.length() - 4);
@@ -72,6 +111,16 @@ public class CardServiceImpl implements CardService {
         return cardResponse;
     }
 
+    /**
+     * Lists card IDs for a specific account (paged).
+     * <p>Page index is normalized to {@code >= 0}; size is capped at {@code 50}.</p>
+     *
+     * @param accountId account id
+     * @param page      zero-based page index
+     * @param size      requested page size (server caps at 50)
+     * @return page of card IDs with paging metadata
+     * @throws ResourceNotFoundException if the account does not exist
+     */
     @Transactional(readOnly = true)
     @Override
     public AccountCardIdsResponse listCardIdsByAccount(UUID accountId, int page, int size) {
@@ -90,6 +139,14 @@ public class CardServiceImpl implements CardService {
         return accountCardIdsResponse;
     }
 
+    /**
+     * Lists all card IDs (paged).
+     * <p>Page index is normalized to {@code >= 0}; size is capped at {@code 50}.</p>
+     *
+     * @param page zero-based page index
+     * @param size requested page size (server caps at 50)
+     * @return page of card IDs with paging metadata
+     */
     @Transactional(readOnly = true)
     @Override
     public CardIdPage listCardIds(int page, int size) {

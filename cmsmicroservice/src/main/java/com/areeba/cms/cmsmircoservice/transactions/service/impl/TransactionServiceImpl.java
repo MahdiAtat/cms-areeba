@@ -20,6 +20,10 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
+/**
+ * Handles transaction creation: validation, fraud check, balance update, and persistence.
+ * <p>Runs in a single DB transaction; account row is fetched with a write lock to serialize balance changes.</p>
+ */
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
@@ -35,7 +39,22 @@ public class TransactionServiceImpl implements TransactionService {
         this.fraudClient = fraudClient;
     }
 
-
+    /**
+     * Creates a debit/credit transaction.
+     * <p>Flow:</p>
+     * <ol>
+     *   <li>Lock account row for update (pessimistic write).</li>
+     *   <li>Validate card (ACTIVE, not expired, belongs to account).</li>
+     *   <li>Validate account (ACTIVE, sufficient balance for debits).</li>
+     *   <li>Call fraud service; if rejected, persist a rejected transaction and return.</li>
+     *   <li>Apply balance change and persist an approved transaction.</li>
+     * </ol>
+     *
+     * @param request amount, type (C/D), accountId, cardId
+     * @return persisted transaction as a response DTO
+     * @throws ResourceNotFoundException    if account or card is missing
+     * @throws TransactionRejectedException on eligibility failures (inactive/expired/ownership/insufficient)
+     */
     @Transactional
     @Override
     public TransactionResponse createTransactionService(TransactionCreateRequest request) {
@@ -99,6 +118,13 @@ public class TransactionServiceImpl implements TransactionService {
         return toResponse(transaction);
     }
 
+    /**
+     * Maps a {@link Transaction} entity to its API response.
+     * <p>Date is returned as {@code OffsetDateTime} in UTC.</p>
+     *
+     * @param transaction managed entity
+     * @return response DTO
+     */
     private TransactionResponse toResponse(Transaction transaction) {
         TransactionResponse response = new TransactionResponse();
         response.setId(transaction.getId());
