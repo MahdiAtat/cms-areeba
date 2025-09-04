@@ -11,7 +11,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Set working directory
-WORKDIR /app
+WORKDIR /fraud
 
 # Copy parent pom first for better caching
 COPY pom.xml ./pom.xml
@@ -24,7 +24,7 @@ COPY fraudmicroservice/src ./fraudmicroservice/src
 COPY fraudmicroservice/swagger ./fraudmicroservice/swagger
 
 # Change to microservice directory
-WORKDIR /app/fraudmicroservice
+WORKDIR /fraud/fraudmicroservice
 
 # Build the application
 RUN mvn clean package -DskipTests
@@ -41,21 +41,21 @@ RUN microdnf update -y && microdnf install -y \
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 ENV PATH=$JAVA_HOME/bin:$PATH
 
-# Create app user
-RUN groupadd -r appuser && useradd -r -g appuser appuser
+# Create fraud user
+RUN groupadd -r frauduser && useradd -r -g frauduser frauduser
 
 # Set working directory
-WORKDIR /app
+WORKDIR /fraud
 
 # Copy the built JAR from build stage
-COPY --from=build /app/fraudmicroservice/target/*.jar app.jar
+COPY --from=build /fraud/fraudmicroservice/target/*.jar fraud.jar
 
-# Change ownership to app user
-RUN chown -R appuser:appuser /app
-USER appuser
+# Change ownership to fraud user
+RUN chown -R frauduser:frauduser /fraud
+USER frauduser
 
 # Expose port
 EXPOSE 8090
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=local"]
+ENTRYPOINT ["java", "-jar", "fraud.jar", "--spring.profiles.active=local"]

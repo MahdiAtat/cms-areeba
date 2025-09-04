@@ -11,7 +11,7 @@ ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Set working directory
-WORKDIR /app
+WORKDIR /cms
 
 # Copy parent pom first for better caching
 COPY pom.xml ./pom.xml
@@ -24,7 +24,7 @@ COPY cmsmicroservice/src ./cmsmicroservice/src
 COPY cmsmicroservice/swagger ./cmsmicroservice/swagger
 
 # Change to microservice directory
-WORKDIR /app/cmsmicroservice
+WORKDIR /cms/cmsmicroservice
 
 # Build the application
 RUN mvn clean package -DskipTests
@@ -41,21 +41,21 @@ RUN microdnf update -y && microdnf install -y \
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 ENV PATH=$JAVA_HOME/bin:$PATH
 
-# Create app user
-RUN groupadd -r appuser && useradd -r -g appuser appuser
+# Create cms user
+RUN groupadd -r cmsuser && useradd -r -g cmsuser cmsuser
 
 # Set working directory
-WORKDIR /app
+WORKDIR /cms
 
 # Copy the built JAR from build stage
-COPY --from=build /app/cmsmicroservice/target/*.jar app.jar
+COPY --from=build /cms/cmsmicroservice/target/*.jar cms.jar
 
-# Change ownership to app user
-RUN chown -R appuser:appuser /app
-USER appuser
+# Change ownership to cms user
+RUN chown -R cmsuser:cmsuser /cms
+USER cmsuser
 
 # Expose port
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=local"]
+ENTRYPOINT ["java", "-jar", "cms.jar", "--spring.profiles.active=local"]
