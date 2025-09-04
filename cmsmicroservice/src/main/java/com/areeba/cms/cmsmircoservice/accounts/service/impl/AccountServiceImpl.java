@@ -6,6 +6,8 @@ import com.areeba.cms.cmsmircoservice.accounts.repo.AccountRepository;
 import com.areeba.cms.cmsmircoservice.accounts.service.AccountService;
 import com.areeba.cms.cmsmircoservice.exception.ResourceNotFoundException;
 import com.areeba.cms.cmsmircoservice.type.Account;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,8 @@ import java.util.UUID;
  */
 @Service
 public class AccountServiceImpl implements AccountService {
+
+    private static final Logger log = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     private final AccountRepository accountRepository;
 
@@ -57,7 +61,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account requireAccount(UUID id) {
         return accountRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+                .orElseThrow(() -> {
+                    log.warn("account not found id={}", id);
+                    return new ResourceNotFoundException("Account not found");
+                });
     }
 
     /**

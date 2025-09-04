@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d279c1fd-5f9d-4b76-bdc2-6dbc2853fb81" name="Changes" comment="Update docker files">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fraudmicroservice/src/main/resources/application-local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/resources/application-local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    <list default="true" id="d279c1fd-5f9d-4b76-bdc2-6dbc2853fb81" name="Changes" comment="Add swagger to endpoints">
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/controller/AccountsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/controller/AccountsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/accounts/service/impl/AccountServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +47,7 @@
     "RequestMappingsPanelWidth1": "75",
     "Spring Boot.Application (1).executor": "Run",
     "Spring Boot.Application.executor": "Run",
+    "Spring Boot.cmsmircoservice.executor": "Run",
     "Spring Boot.fraudmicroservice.executor": "Run",
     "git-widget-placeholder": "master",
     "node.js.selected.package.tslint": "(autodetect)"
@@ -109,13 +109,22 @@
       <option name="project" value="LOCAL" />
       <updated>1757020119257</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add swagger to endpoints">
+      <option name="closed" value="true" />
+      <created>1757021730754</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1757021730754</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Add java docs" />
     <MESSAGE value="Update docker files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update docker files" />
+    <MESSAGE value="Add swagger to endpoints" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add swagger to endpoints" />
   </component>
 </project>
