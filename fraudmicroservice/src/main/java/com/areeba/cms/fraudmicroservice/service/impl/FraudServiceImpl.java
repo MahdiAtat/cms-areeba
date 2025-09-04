@@ -1,10 +1,13 @@
 package com.areeba.cms.fraudmicroservice.service.impl;
 
+import com.areeba.cms.fraudmicroservice.controller.FraudController;
 import com.areeba.cms.fraudmicroservice.repo.FraudRepository;
 import com.areeba.cms.fraudmicroservice.service.FraudService;
 import com.areeba.cms.fraudmicroservice.type.FraudCheckRequest;
 import com.areeba.cms.fraudmicroservice.type.FraudCheckResponse;
 import com.areeba.cms.fraudmicroservice.type.FraudEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,8 @@ import java.util.UUID;
  */
 @Service
 public class FraudServiceImpl implements FraudService {
+
+    private static final Logger log = LoggerFactory.getLogger(FraudServiceImpl.class);
 
     /** Allowed number of attempts within the interval before we start rejecting the next one. */
     private static final int MAX_TXN_ATTEMPTS = 8;
@@ -72,7 +77,9 @@ public class FraudServiceImpl implements FraudService {
         fraudEvent.setCardId(cardId);
         fraudEvent.setAmount(amount);
         fraudEvent.setEventTime(timeStamp.toInstant());
+        log.debug("Saving fraud event");
         fraudRepository.save(fraudEvent);
+        log.info("Fraud event saved");
 
         FraudCheckResponse fraudCheckResponse = new FraudCheckResponse();
 

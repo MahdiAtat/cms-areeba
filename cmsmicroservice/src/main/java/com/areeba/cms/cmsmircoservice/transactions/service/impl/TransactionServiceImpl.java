@@ -11,6 +11,8 @@ import com.areeba.cms.cmsmircoservice.transactions.service.TransactionService;
 import com.areeba.cms.cmsmircoservice.type.Account;
 import com.areeba.cms.cmsmircoservice.type.Card;
 import com.areeba.cms.cmsmircoservice.type.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,8 @@ import java.time.ZoneOffset;
  */
 @Service
 public class TransactionServiceImpl implements TransactionService {
+
+    private static final Logger log = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
@@ -59,12 +63,14 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionResponse createTransactionService(TransactionCreateRequest request) {
         // Load and lock account for update
+        log.debug("Locking account {}", request.getAccountId());
         Account account = accountRepository.findByIdForUpdate(request.getAccountId())
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
         Card card = cardRepository.findById(request.getCardId())
                 .orElseThrow(() -> new ResourceNotFoundException("Card not found"));
 
         // Card eligibility
+        log.debug("Checking card eligibility {}", request.getAccountId());
         if (card.getStatus() != CardStatus.ACTIVE)
             throw new TransactionRejectedException("Card not active");
         if (card.getExpiry().isBefore(LocalDate.now()))
@@ -73,6 +79,7 @@ public class TransactionServiceImpl implements TransactionService {
             throw new TransactionRejectedException("Card does not belong to account");
 
         // Account eligibility
+        log.debug("Checking account eligibility {}", request.getAccountId());
         if (account.getStatus() != AccountStatus.ACTIVE)
             throw new TransactionRejectedException("Account not active");
         BigDecimal amount = request.getTransactionAmount();
@@ -80,6 +87,7 @@ public class TransactionServiceImpl implements TransactionService {
             throw new TransactionRejectedException("Insufficient balance");
 
         // Fraud check
+        log.debug("Checking fraud {}", request.getAccountId());
         FraudCheckRequest fraudCheckRequest = new FraudCheckRequest();
         fraudCheckRequest.setAmount(amount);
         fraudCheckRequest.setCardId(card.getId());
@@ -99,6 +107,7 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         // Apply balance
+        log.debug("Apply balance {}", request.getAccountId());
         if (request.getTransactionType() == TransactionType.D) {
             account.setBalance(account.getBalance().subtract(amount));
         } else {
@@ -113,7 +122,9 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setTransactionType(request.getTransactionType());
         transaction.setTransactionDate(Instant.now());
         transaction.setResponse(String.valueOf(TransactionResponse.ResponseEnum.APPROVED));
+        log.debug("Saving transaction for account {}", transaction.getAccount().getId());
         transaction = transactionRepository.save(transaction);
+        log.info("Transaction saved {}", transaction.getId());
 
         return toResponse(transaction);
     }

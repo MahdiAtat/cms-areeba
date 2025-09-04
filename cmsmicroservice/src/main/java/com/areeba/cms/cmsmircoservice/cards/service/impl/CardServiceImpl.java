@@ -7,6 +7,8 @@ import com.areeba.cms.cmsmircoservice.cards.service.CardService;
 import com.areeba.cms.cmsmircoservice.exception.ResourceNotFoundException;
 import com.areeba.cms.cmsmircoservice.type.Account;
 import com.areeba.cms.cmsmircoservice.type.Card;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,6 +24,8 @@ import java.util.UUID;
  */
 @Service
 public class CardServiceImpl implements CardService {
+
+    private static final Logger log = LoggerFactory.getLogger(CardServiceImpl.class);
 
     private final CardRepository cardRepository;
     private final AccountService accountService;
@@ -48,7 +52,9 @@ public class CardServiceImpl implements CardService {
         card.setCardNumber(cardCreateRequest.getCardNumber());
         card.setExpiry(cardCreateRequest.getExpiry());
         card.setStatus(CardStatus.INACTIVE);
+        log.debug("Saving card {}", card.getCardNumber());
         card = cardRepository.save(card);
+        log.info("Card saved {}", card.getCardNumber());
         return toResponse(card);
     }
 
