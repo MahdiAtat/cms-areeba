@@ -26,16 +26,25 @@ services:
     ports:
       - "${CMS_SERVICE_PORT}:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - MANAGEMENT_SERVER_PORT=8080
       - SPRING_DATASOURCE_URL=${CMS_DATASOURCE_URL}
       - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
-      - SERVER_SERVLET_CONTEXT_PATH=${SERVER_SERVLET_CONTEXT_PATH}
-      - CMS_AREBA_CRYPTO_PASSWORD=${CMS_AREBA_CRYPTO_PASSWORD}
-      - CMS_AREBA_CRYPTO_SALT_HEX=${CMS_AREBA_CRYPTO_SALT_HEX}
+      - CMS_AREEBA_CRYPTO_PASSWORD=${CMS_AREEBA_CRYPTO_PASSWORD}
+      - CMS_AREEBA_CRYPTO_SALT_HEX=${CMS_AREEBA_CRYPTO_SALT_HEX}
       - FRAUD_URL=${FRAUD_URL}
+      - SPRING_FLYWAY_SCHEMAS=${CMS_FLYWAY_SCHEMAS}
+      - SPRING_FLYWAY_DEFAULT_SCHEMA=${CMS_FLYWAY_DEFAULT_SCHEMA}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -fsS http://localhost:8080/cms/v1/actuator/health/readiness || exit 1" ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
     depends_on:
       postgres:
+        condition: service_healthy
+      fraud-microservice:
         condition: service_healthy
 
   # Fraud Microservice
@@ -47,13 +56,20 @@ services:
     ports:
       - "${FRAUD_SERVICE_PORT}:8090"
     environment:
-      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - MANAGEMENT_SERVER_PORT=8090
       - SPRING_DATASOURCE_URL=${FRAUD_DATASOURCE_URL}
       - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
-      - SERVER_SERVLET_CONTEXT_PATH=${FRAUD_SERVER_SERVLET_CONTEXT_PATH}
       - FRAUD_LIMIT=${FRAUD_LIMIT}
       - FRAUD_INTERVAL=${FRAUD_INTERVAL}
+      - SPRING_FLYWAY_SCHEMAS=${FRAUD_FLYWAY_SCHEMAS}
+      - SPRING_FLYWAY_DEFAULT_SCHEMA=${FRAUD_FLYWAY_DEFAULT_SCHEMA}
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -fsS http://localhost:8090/fraud/v1/actuator/health/readiness || exit 1" ]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
     depends_on:
       postgres:
         condition: service_healthy

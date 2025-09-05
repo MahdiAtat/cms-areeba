@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d279c1fd-5f9d-4b76-bdc2-6dbc2853fb81" name="Changes" comment="Add logs to account">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="d279c1fd-5f9d-4b76-bdc2-6dbc2853fb81" name="Changes" comment="Add README.md">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/test/resources/application-test.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fraudmicroservice/src/test/resources/application-test.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/resources/application-local.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env.example" beforeDir="false" afterPath="$PROJECT_DIR$/env.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fraudmicroservice/src/main/resources/application-local.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fraudmicroservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fraudmicroservice/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,9 +164,17 @@
       <option name="presentableId" value="Default" />
       <updated>1757058958350</updated>
       <workItem from="1757058975295" duration="1428000" />
-      <workItem from="1757067535752" duration="13259000" />
+      <workItem from="1757067535752" duration="18182000" />
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add README.md">
+      <option name="closed" value="true" />
+      <created>1757108066134</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1757108066134</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,6 +186,7 @@
     <MESSAGE value="Update docker files" />
     <MESSAGE value="Add swagger to endpoints" />
     <MESSAGE value="Add logs to account" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add logs to account" />
+    <MESSAGE value="Add README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add README.md" />
   </component>
 </project>
