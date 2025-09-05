@@ -43,7 +43,7 @@ FROM eclipse-temurin:21-jre-alpine
 #ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Create cms user
-RUN groupadd -r cmsuser && useradd -r -g cmsuser cmsuser
+RUN addgroup -S cmsuser && adduser -S cmsuser -G cmsuser
 
 # Set working directory
 WORKDIR /cms

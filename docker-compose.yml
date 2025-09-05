@@ -2,17 +2,17 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:17-alpine
-    container_name: cms-postgres
+    container_name: ${POSTGRES_CONTAINER_NAME}
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5433:5432"
+      - "${POSTGRES_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -22,14 +22,18 @@ services:
     build:
       context: .
       dockerfile: cmsmicroservice/Dockerfile
-    container_name: cms-microservice
+    container_name: ${CMS_CONTAINER_NAME}
     ports:
-      - "8080:8080"
+      - "${CMS_SERVICE_PORT}:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=local
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres?currentSchema=cms_cmsMicroService
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - SPRING_DATASOURCE_URL=${CMS_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - SERVER_SERVLET_CONTEXT_PATH=${SERVER_SERVLET_CONTEXT_PATH}
+      - CMS_AREBA_CRYPTO_PASSWORD=${CMS_AREBA_CRYPTO_PASSWORD}
+      - CMS_AREBA_CRYPTO_SALT_HEX=${CMS_AREBA_CRYPTO_SALT_HEX}
+      - FRAUD_URL=${FRAUD_URL}
     depends_on:
       postgres:
         condition: service_healthy
@@ -39,14 +43,17 @@ services:
     build:
       context: .
       dockerfile: fraudmicroservice/Dockerfile
-    container_name: fraud-microservice
+    container_name: ${FRAUD_CONTAINER_NAME}
     ports:
-      - "8090:8090"
+      - "${FRAUD_SERVICE_PORT}:8090"
     environment:
-      - SPRING_PROFILES_ACTIVE=local
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres?currentSchema=cms_fraudMicroService
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - SPRING_DATASOURCE_URL=${FRAUD_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - SERVER_SERVLET_CONTEXT_PATH=${FRAUD_SERVER_SERVLET_CONTEXT_PATH}
+      - FRAUD_LIMIT=${FRAUD_LIMIT}
+      - FRAUD_INTERVAL=${FRAUD_INTERVAL}
     depends_on:
       postgres:
         condition: service_healthy

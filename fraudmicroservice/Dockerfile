@@ -43,7 +43,7 @@ FROM eclipse-temurin:21-jre-alpine
 #ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Create fraud user
-RUN groupadd -r frauduser && useradd -r -g frauduser frauduser
+RUN addgroup -S frauduser && adduser -S frauduser -G frauduser
 
 # Set working directory
 WORKDIR /fraud
