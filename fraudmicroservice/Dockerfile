@@ -1,15 +1,5 @@
 # Multi-stage build for Fraud Microservice
-#FROM maven:3.8.1 AS build
 FROM maven:3.9.8-eclipse-temurin-21 AS build
-
-# Install OpenJDK 21
-#RUN microdnf update -y && microdnf install -y \
-#    java-21-openjdk-devel \
-#    && microdnf clean all
-
-# Set JAVA_HOME to Java 21
-#ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
-#ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Set working directory
 WORKDIR /fraud
@@ -33,15 +23,6 @@ RUN mvn clean package -DskipTests
 # Runtime stage
 FROM eclipse-temurin:21-jre-alpine
 
-# Install OpenJDK 21
-#RUN microdnf update -y && microdnf install -y \
-#    java-21-openjdk-devel \
-#    && microdnf clean all
-
-# Set JAVA_HOME to Java 21
-#ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
-#ENV PATH=$JAVA_HOME/bin:$PATH
-
 # Create fraud user
 RUN addgroup -S frauduser && adduser -S frauduser -G frauduser
 
@@ -59,4 +40,4 @@ USER frauduser
 EXPOSE 8090
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "fraud.jar", "--spring.profiles.active=local"]
+ENTRYPOINT ["java", "-jar", "fraud.jar"]

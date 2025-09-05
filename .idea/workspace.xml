@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d279c1fd-5f9d-4b76-bdc2-6dbc2853fb81" name="Changes" comment="Add logs to account">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmsmicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fraudmicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/fraudmicroservice/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,19 +24,23 @@
     &quot;assignee&quot;: &quot;MAtat10&quot;
   }
 }</component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="e12cb161-8df4-4ca6-ada9-4ae70f69286f" />
-  </component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/MahdiAtat/cms-areeba.git&quot;,
-    &quot;accountId&quot;: &quot;20da9fba-bccc-4135-a6d0-cfb840aafa4f&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/MahdiAtat/cms-areeba.git",
+    "accountId": "18df1735-2fc1-4b9a-b23c-74b63db7c48c"
   }
-}</component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="32GtuJg5aIXsiRByCFtxcJAdrVt" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Maven.cmsmicroservice [clean].executor": "Run",
@@ -45,12 +51,20 @@
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.Application (1).executor": "Run",
     "Spring Boot.Application.executor": "Run",
     "Spring Boot.cmsmircoservice.executor": "Run",
     "Spring Boot.fraudmicroservice.executor": "Run",
     "git-widget-placeholder": "master",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager" selected="Spring Boot.cmsmircoservice">
@@ -92,6 +106,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="Add java docs">
       <option name="closed" value="true" />
@@ -125,8 +146,19 @@
       <option name="project" value="LOCAL" />
       <updated>1757023174613</updated>
     </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d279c1fd-5f9d-4b76-bdc2-6dbc2853fb81" name="Changes" comment="Add logs to account" />
+      <created>1757058958350</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1757058958350</updated>
+      <workItem from="1757058975295" duration="1428000" />
+    </task>
     <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit" />
