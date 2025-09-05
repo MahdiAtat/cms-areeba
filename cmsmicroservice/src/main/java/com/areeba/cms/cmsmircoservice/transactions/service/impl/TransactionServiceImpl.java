@@ -93,17 +93,17 @@ public class TransactionServiceImpl implements TransactionService {
         fraudCheckRequest.setCardId(card.getId());
         fraudCheckRequest.setTimestamp(OffsetDateTime.now(ZoneOffset.UTC));
         FraudCheckResponse fraud = fraudClient.evaluate(fraudCheckRequest);
+        Transaction transaction = new Transaction();
+        transaction.setAccount(account);
+        transaction.setCard(card);
+        transaction.setTransactionAmount(amount);
+        transaction.setTransactionType(request.getTransactionType());
+        transaction.setTransactionDate(Instant.now());
         if (!fraud.getApproved()) {
             // Save rejected transaction record
-            Transaction rejected = new Transaction();
-            rejected.setAccount(account);
-            rejected.setCard(card);
-            rejected.setTransactionAmount(amount);
-            rejected.setTransactionType(request.getTransactionType());
-            rejected.setTransactionDate(Instant.now());
-            rejected.setResponse("REJECTED");
-            rejected = transactionRepository.save(rejected);
-            return toResponse(rejected);
+            transaction.setResponse("REJECTED");
+            transaction = transactionRepository.save(transaction);
+            return toResponse(transaction);
         }
 
         // Apply balance
@@ -115,12 +115,6 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         // Save transaction
-        Transaction transaction = new Transaction();
-        transaction.setAccount(account);
-        transaction.setCard(card);
-        transaction.setTransactionAmount(amount);
-        transaction.setTransactionType(request.getTransactionType());
-        transaction.setTransactionDate(Instant.now());
         transaction.setResponse(String.valueOf(TransactionResponse.ResponseEnum.APPROVED));
         log.debug("Saving transaction for account {}", transaction.getAccount().getId());
         transaction = transactionRepository.save(transaction);

@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d279c1fd-5f9d-4b76-bdc2-6dbc2853fb81" name="Changes" comment="Add logs to account">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsmicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fraudmicroservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/fraudmicroservice/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cmsmicroservice/src/main/java/com/areeba/cms/cmsmircoservice/transactions/service/impl/TransactionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmsmicroservice/src/test/resources/application-test.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fraudmicroservice/src/test/resources/application-test.properties" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,18 +25,18 @@
     &quot;assignee&quot;: &quot;MAtat10&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/MahdiAtat/cms-areeba.git",
-    "accountId": "18df1735-2fc1-4b9a-b23c-74b63db7c48c"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MahdiAtat/cms-areeba.git&quot;,
+    &quot;accountId&quot;: &quot;18df1735-2fc1-4b9a-b23c-74b63db7c48c&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="32GtuJg5aIXsiRByCFtxcJAdrVt" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -60,6 +61,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/brt.matat/Desktop/cms",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -67,6 +69,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\brt.matat\Desktop\cms" />
+    </key>
+  </component>
   <component name="RunManager" selected="Spring Boot.cmsmircoservice">
     <configuration name="cmsmircoservice" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
       <option name="ACTIVE_PROFILES" value="local" />
@@ -109,10 +116,12 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="Add java docs">
       <option name="closed" value="true" />
@@ -153,6 +162,7 @@
       <option name="presentableId" value="Default" />
       <updated>1757058958350</updated>
       <workItem from="1757058975295" duration="1428000" />
+      <workItem from="1757067535752" duration="13259000" />
     </task>
     <option name="localTasksCounter" value="5" />
     <servers />
