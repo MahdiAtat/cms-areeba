@@ -102,8 +102,8 @@ public class TransactionServiceImpl implements TransactionService {
         if (!fraud.getApproved()) {
             // Save rejected transaction record
             transaction.setResponse("REJECTED");
-            transaction = transactionRepository.save(transaction);
-            return toResponse(transaction);
+            transactionRepository.save(transaction);
+            throw new TransactionRejectedException("Possible fraud detected");
         }
 
         // Apply balance

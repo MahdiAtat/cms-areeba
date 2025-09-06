@@ -20,6 +20,11 @@ A modern, backend card management system built with java springboot, postgresql.
   - Called from Transactions via Feign
 - **Docs**: Swagger/OpenAPI documentation (fraud/v1/swagger-ui.html)
 
+### Additional Features
+
+- Add endpoint to list all cardIds with pagination
+- Add endpoint to list all cardIds for specific account with pagination
+
 ### Backend
 
 - **RESTful API**: Java SpringBoot
@@ -27,12 +32,15 @@ A modern, backend card management system built with java springboot, postgresql.
 - **API Documentation**: Swagger/OpenAPI documentation
 - **Logging**: Lombok for structured logging
 - **Testing**: Junit 5 and Mockito
+- **Monitoring**: Springboot health checks
+
+This project is built with the help of `openapi-generator-maven-plugin` that generates from the swagger the respective interfaces and classes
+
 
 ## 🏗️ Architecture
 
 ```
 cms
-|
 ├───cmsmicroservice
 │   ├───src
 │   │   ├───main
@@ -74,9 +82,7 @@ cms
 │   │                           ├───Accounts
 │   │                           ├───Cards
 │   │                           └───Transactions
-│   ├───swagger
-|
-|
+│   └───swagger
 └───fraudmicroservice
     ├───src
     │   ├───main
@@ -101,28 +107,13 @@ cms
     │                   └───cms
     │                       └───fraudmicroservice
     │                           └───Fraud
-    ├───swagger
-    └───target
-        ├───classes
-            ├───com
-            │   └───areeba
-            │       └───cms
-            │           └───fraudmicroservice
-            │               ├───controller
-            │               ├───handler
-            │               ├───repo
-            │               ├───service
-            │               │   └───impl
-            │               └───type
-            └───db
-               └───postgresql
+    └───swagger
 
 ```
 
 ## 📚 Documentation
 
 - **API Documentation**: Interactive Swagger documentation available at `/cms/v1/swagger-ui.html` or `/fraud/v1/swagger-ui.html` when the backend is running
-- **Environment Setup**: Copy `env.example` files in `.` directory.
 
 ## 🛠️ Installation & Setup
 
@@ -141,13 +132,12 @@ git clone <repository-url>
 - Safe to commit to version control
 - Contains placeholder values and documentation
 
-Edit `cms/env.local` with your configuration
+Edit `env.local` with your configuration
 
 ### 3. Start Development Servers
 
 ```bash
-# Start in development mode
- docker-compose --env-file env.local up
+ docker compose --env-file env.local up -d --build
 ```
 
 This will start:
@@ -160,11 +150,14 @@ This will start:
 
 ## 🧪 Testing
 
-### Run All Tests
+### Run All Unit Tests
 
 ```bash
 mvn clean test 
 ```
+
+### Run Jmeter tests
+- Jmeter file with all endpoints is already set in the cms folder. All you need to do is open jmeter with `cms.jmx` file and update the endpoint variables based on the ids generated. This will run all the endpoints for all microservices.
 
 ## 🗄️ Database Schema
 

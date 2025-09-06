@@ -40,7 +40,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /accounts/{id}/carIds:
+  /accounts/{id}/cardIds:
     get:
       tags: ["Accounts"]
       summary: "List all cardIds for a specific accountId"

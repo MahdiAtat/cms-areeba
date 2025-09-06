@@ -1,0 +1,2 @@
+CREATE SCHEMA IF NOT EXISTS cms_fraudmicroservice;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
