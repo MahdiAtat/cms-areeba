@@ -134,37 +134,14 @@ git clone <repository-url>
 
 ### 2. Environment Configuration
 
-Edit `cms/env.local` with your configuration:
+#### Environment Files
+#### `env.example`
 
-```env
-# Database
-DATABASE_URL="mysql://username:password@localhost:3306/employee_directory"
+- Template file with all required environment variables
+- Safe to commit to version control
+- Contains placeholder values and documentation
 
-# Server
-PORT=5001
-NODE_ENV=development
-HOST=localhost
-
-# JWT
-JWT_ACCESS_SECRET=your-super-secret-access-token-key-here
-JWT_ACCESS_EXPIRES_IN=15m
-JWT_REFRESH_EXPIRES_IN=3600
-
-# AWS
-AWS_ACCESS_KEY_ID=your-aws-access-key
-AWS_SECRET_ACCESS_KEY=your-aws-secret-key
-AWS_REGION=us-east-1
-AWS_S3_BUCKET=your-employee-directory-bucket
-AWS_CLOUDFRONT_DOMAIN=your-cloudfront-domain.cloudfront.net
-
-# CORS
-CORS_ORIGIN=http://localhost:5173
-
-# Security
-BCRYPT_ROUNDS=12
-RATE_LIMIT_WINDOW_MS=900000
-RATE_LIMIT_MAX_REQUESTS=100
-```
+Edit `cms/env.local` with your configuration
 
 ### 3. Start Development Servers
 
